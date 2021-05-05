@@ -1,7 +1,6 @@
 package it.unibs.TesteAnnidate;
 
-import it.unibs.fp.mylib.InputDati;
-
+import java.util.ArrayList;
 import java.util.Random;
 
 public class EquilibrioDelMondo {
@@ -15,7 +14,50 @@ public class EquilibrioDelMondo {
     int [][] matrice_adiacenza = new int[NUM_ELEMENTI][NUM_ELEMENTI];
 
 
+    public EquilibrioDelMondo(){
+        //inizializzo la matrice con il valore di default DEFAULT
 
+        for(int i = 0; i < NUM_ELEMENTI; i++)
+            for(int j = 0; j < NUM_ELEMENTI; j++)
+                matrice_adiacenza[i][j] = DEFAULT;
+
+        Random generatore = new Random();
+
+        for(int riga = 0; riga < NUM_ELEMENTI; riga++){
+
+            int somma_potenze_riga = 0;      //deve essere uguale alla somma delle potenze sulla colonna dello stesso indice
+            int somma_potenze_colonna = 0;
+
+            for(int j = 0; j < NUM_ELEMENTI; j++){
+                if(riga != j){   //controllo se mi trovo in corrispondenza di elementi diversi
+                    //genero un numero a caso fra 0 e POTENZA_MAX
+                    matrice_adiacenza[riga][j] = generatore.nextInt(POTENZA_MAX);
+                    somma_potenze_riga += matrice_adiacenza[riga][j];
+
+                }else matrice_adiacenza[riga][j] = 0;
+
+                //passo la colonna corrispondente alla riga appena creata
+                do{
+
+                    for(int index = 0; index < NUM_ELEMENTI; index++){
+                        if(matrice_adiacenza[index][riga] == DEFAULT){    //se è uguale a -1 vuol dire che non ci sono ancora passata
+
+                            //se ad esempio [ACQUA][TERRA] = 0 allora vuol dire che è la terra ad essere pi forte e quindi
+                            //setto gli indici opposti con un numero diverso da 0;
+                            if(matrice_adiacenza[riga][index] == 0){
+                                matrice_adiacenza[index][riga] = generatore.nextInt(POTENZA_MAX - 1) + 1;
+                                somma_potenze_colonna += matrice_adiacenza[index][riga];
+
+                            }else matrice_adiacenza[index][riga] = 0;
+                        }
+                    }
+
+                }while (somma_potenze_colonna <= somma_potenze_riga);
+
+            }
+
+        }
+    }
 
 
 
