@@ -2,20 +2,28 @@ package it.unibs.TesteAnnidate;
 
 public class Battaglia {
 
+	public static final String VITTORIA_G2 = String.format("Bravo %s, HAI VINTO!!", g2.getNome());
+	public static final String VITTORIA_G1 = String.format("Bravo %s, HAI VINTO!!", g1.getNome());
 	private static final char[] DANNI_FORMAT = String.format(
 			"Il giocatore 1 ha subito %d danni, mentre il giocatore 2 ne ha subiti %d", danni(elemento1, elemento2),
 			danni(elemento2, elemento1));
 	private Giocatore g1;
 	private Giocatore g2;
-	private boolean isTerminata;
 
 	public void scontroCompleto() {
 		g1.getGolem() = new TamaGolem.evocaGolem();
 		g2.getGolem() = new TamaGolem.evocaGolem();
-		while (g1.getNumeroGolem() > 0 || g2.getNumeroGolem() > 0) {
+		while (g1.getNumeroGolem() > 0 && g2.getNumeroGolem() > 0) {
 			scontroSingolo();
 		}
-
+		if(g1.getNumeroGolem() > 0 && g2.getNumeroGolem() == 0) {
+			System.out.println(VITTORIA_G1);
+			g1.setVittorie(g1.getVittorie() + 1);
+		}
+		else if(g2.getNumeroGolem() > 0 && g1.getNumeroGolem() == 0) {
+			System.out.println(VITTORIA_G2);
+			g2.setVittorie(g2.getVittorie() + 1);
+		}
 	}
 
 	public void scontroSingolo() {
@@ -46,6 +54,8 @@ public class Battaglia {
 
 		} while (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() > 0);
 	}
+	
+	
 
 	// Costruttore dati due giocatori
 	public Battaglia(Giocatore g1, Giocatore g2) {
