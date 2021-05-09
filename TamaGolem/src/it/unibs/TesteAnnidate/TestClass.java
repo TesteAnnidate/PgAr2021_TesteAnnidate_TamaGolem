@@ -5,7 +5,7 @@ import java.util.Random;
 public class TestClass {
     public static void main(String[] args) {
         final int NUM_ELEMENTI = 5;
-        final int POTENZA_MAX = 4;   //massimo valore di danno che un elemento può fare prevalendo su un altro
+        final int POTENZA_MAX = 3;   //massimo valore di danno che un elemento può fare prevalendo su un altro
         final int DEFAULT = -80;          //valore con cui viene inizializzata la matrice inizialmente
         final int NUM_DEBOLI_MASSIMI = 2;    //stabilisco il massimo numero di elementi su cui un elemento può prevalere
         //per evitare che un elemento non interascisca con nessuno
@@ -60,48 +60,51 @@ public class TestClass {
 
                 //controllo che le debolezze siano uguali alle potenze
                 if (j == (NUM_ELEMENTI - 1) && moduloDebolezze != moduloPotenze) {
-                    //se sono piu piccole le cose negative decremento i positivi
-                    if(moduloDebolezze < moduloPotenze){
-                        do {
-                            for (int index2 = riga; index2 < NUM_ELEMENTI; index2++) {
-                                //non se è gia 1 o -1 non posso farlo andare a 0
-                                if (matrice_adiacenza[riga][index2] >= 2) {
-                                    matrice_adiacenza[riga][index2]--;
-                                    matrice_adiacenza[index2][riga]++;
-                                    moduloPotenze--;
-                                }else if(matrice_adiacenza[riga][index2] < 0){
-                                    matrice_adiacenza[riga][index2] --;
-                                    matrice_adiacenza[index2][riga]++;
-                                    moduloDebolezze ++;
-                                }
-
-                                if (moduloDebolezze == moduloPotenze)
-                                    break;
+                    if (moduloDebolezze < moduloPotenze) {
+                        int potenza_mancante = moduloPotenze - moduloDebolezze;
+                        //parto dalla riga che sto considerando, le altre non le tocco
+                        for (int index2 = riga; index2 < NUM_ELEMENTI; index2++) {
+                            if (matrice_adiacenza[riga][index2] < 0) {  //se il primo che incontro è negativo
+                                matrice_adiacenza[riga][index2] -= potenza_mancante;
+                                matrice_adiacenza[index2][riga] = -matrice_adiacenza[riga][index2];
+                                break;
+                            } else if (matrice_adiacenza[riga][index2] > 0 && matrice_adiacenza[riga][index2] > (potenza_mancante + 1)) {
+                                matrice_adiacenza[riga][index2] -= potenza_mancante;
+                                matrice_adiacenza[index2][riga] = -matrice_adiacenza[riga][index2];
+                                break;
                             }
-                        }while (moduloDebolezze != moduloPotenze) ;
-                    //se il modulo delle potenze è piu grande
-                    }else{
-                        do {
-                            for (int index2 = riga; index2 < NUM_ELEMENTI; index2++) {
-                                //non se è gia 1 o -1 non posso farlo andare a 0
-                                if (matrice_adiacenza[riga][index2] >0) {
-                                    matrice_adiacenza[riga][index2]++;
-                                    matrice_adiacenza[index2][riga]--;
-                                    moduloPotenze++;
-                                }else if(matrice_adiacenza[riga][index2] <= -2){
-                                    matrice_adiacenza[riga][index2] ++;
-                                    matrice_adiacenza[index2][riga]--;
-                                    moduloDebolezze --;
-                                }
+                        }
 
-                                if (moduloDebolezze == moduloPotenze)
-                                    break;
+                    } else{   //nel caso in cui ho ottenuto una potenza maggiore
+                        //faccio ripassare tutta la colonna e finche la potenza è maggiore o uguale a 2
+                        //la diminuisco di uno finche ottengo la somma che mi serve
+                        //nel caso finissi di passare la colonna e le cose non andassero ancora bene allora farei
+                        //un'altra passata (per il do-while)
+                        int potenzaMancante = moduloDebolezze - moduloPotenze;
+                        for (int index3 = riga; index3 < NUM_ELEMENTI; index3++) {
+                            if (matrice_adiacenza[riga][index3] > 0) {
+                                matrice_adiacenza[riga][index3] += potenzaMancante;
+                                matrice_adiacenza[index3][riga] = - matrice_adiacenza[riga][index3];
+                                break;
+                            }else if (matrice_adiacenza[riga][index3] < 0 && matrice_adiacenza[riga][index3] < -(potenzaMancante + 1)) {
+                                matrice_adiacenza[riga][index3] += potenzaMancante;
+                                matrice_adiacenza[index3][riga] = -matrice_adiacenza[riga][index3];
+                                break;
                             }
-                        }while (moduloDebolezze != moduloPotenze) ;
+                        }
                     }
+
                 }
             }
         }
+
+        for (int i = 0; i < NUM_ELEMENTI; i++) {
+            for (int j = 0; j < NUM_ELEMENTI; j++) {
+                System.out.print(matrice_adiacenza[i][j]+ " ");
+            }
+            System.out.println("\n");
+        }
+
     }
 }
 

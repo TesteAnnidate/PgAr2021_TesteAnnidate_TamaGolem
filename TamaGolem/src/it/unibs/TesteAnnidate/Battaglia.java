@@ -2,7 +2,7 @@ package it.unibs.TesteAnnidate;
 
 public class Battaglia {
 
-	public static final String VITTORIA_G2 = String.format("Bravo %s, HAI VINTO!!", g2.getNome());
+	/*public static final String VITTORIA_G2 = String.format("Bravo %s, HAI VINTO!!", g2.getNome());
 	public static final String VITTORIA_G1 = String.format("Bravo %s, HAI VINTO!!", g1.getNome());
 	private static final char[] DANNI_FORMAT = String.format(
 			"Il giocatore 1 ha subito %d danni, mentre il giocatore 2 ne ha subiti %d", danni(elemento1, elemento2),
@@ -35,7 +35,7 @@ public class Battaglia {
 			if (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() > 0) {
 				System.out.println(DANNI_FORMAT);
 				i++;
-				k++;
+				k++;    //metti is esausto
 			} else if (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() <= 0) {
 				i++;
 				k = 0;
@@ -79,14 +79,6 @@ public class Battaglia {
 
 	public void setG2(Giocatore g2) {
 		this.g2 = g2;
-	}
-
-	public boolean isTerminata() {
-		return isTerminata;
-	}
-
-	public void setTerminata(boolean isTerminata) {
-		this.isTerminata = isTerminata;
-	}
+	}*/
 
 }
