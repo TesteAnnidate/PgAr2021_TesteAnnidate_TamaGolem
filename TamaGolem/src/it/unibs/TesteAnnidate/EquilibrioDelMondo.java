@@ -5,110 +5,150 @@ import java.util.Random;
 
 public class EquilibrioDelMondo {
 
+    int numeroElementi;
+    int[][] matriceEquilibrio;
 
+    public EquilibrioDelMondo(int numeroElementi){
+        this.numeroElementi = numeroElementi;
+        this.matriceEquilibrio = new int[numeroElementi][numeroElementi];
+    }
 
-    public static final int NUM_ELEMENTI = 4;
-    public static final int POTENZA_MAX = 6;   //massimo valore di danno che un elemento può fare
-    public static final int DEFAULT = -1;
+    public boolean isCorrect(){
+        int contatore = 0;
+        for(int i = 0; i < this.numeroElementi; i++){
+            for(int j = 0; j < this.numeroElementi; j ++){
+                if(i != j && this.matriceEquilibrio[i][j] == 0) return false;
+            }
+        }
+        return true;
+    }
 
-    int [][] matrice_adiacenza = new int[NUM_ELEMENTI][NUM_ELEMENTI];
+    public int[][] tabellaProvvisoria() {
+        int positivo = 1;
+        int massimaPotenzaGenerabile = this.numeroElementi / 2 + this.numeroElementi / 4;
+        int prevaleMax = this.numeroElementi / 2;     //massimo numero di elementi sul qual epuo prevalere
+        int subisceMax = this.numeroElementi / 2;
 
-
-    public EquilibrioDelMondo(){
-        //inizializzo la matrice con il valore di default DEFAULT
-
-        for(int i = 0; i < NUM_ELEMENTI; i++)
-            for(int j = 0; j < NUM_ELEMENTI; j++)
-                matrice_adiacenza[i][j] = DEFAULT;
+        int[][] matrice_adiacenza = new int[this.numeroElementi][this.numeroElementi];
 
         Random generatore = new Random();
 
-        for(int riga = 0; riga < NUM_ELEMENTI; riga++){
+        for (int riga = 0; riga < this.numeroElementi; riga++) {
 
-            int somma_potenze_riga = 0;      //deve essere uguale alla somma delle potenze sulla colonna dello stesso indice
-            int somma_potenze_colonna = 0;
+            int somma_potenze_riga = 0;
+            int somma_debolezze = 0;
+            int numeroPrevalenze = 0;
+            int numeroDebolezze = 0;
 
-            for(int j = 0; j < NUM_ELEMENTI; j++){
-                if(riga != j){   //controllo se mi trovo in corrispondenza di elementi diversi
-                    //genero un numero a caso fra 0 e POTENZA_MAX
-                    matrice_adiacenza[riga][j] = generatore.nextInt(POTENZA_MAX);
-                    somma_potenze_riga += matrice_adiacenza[riga][j];
+            for (int colonna = 0; colonna < this.numeroElementi; colonna++) {
+                //controllo anche che la casella non sia ancora stata impostata, se lo è allora passo avanti ma
+                //tengo comunque conto della potenza già presente
+                if (matrice_adiacenza[riga][colonna] == 0) {
+                    //controllo di trovarmi in corrispondenza di elementi diversi e controllo anche non sia stato superato
+                    //il numero massimo di elementi sui quali prevalere
+                    if (riga != colonna) {
+                        int lancioMoneta = generatore.nextInt(2);  //fra 0 e 1
 
-                }else matrice_adiacenza[riga][j] = 0;
+                        if (lancioMoneta == positivo) {
+                            if (numeroPrevalenze < prevaleMax) {
+                                matrice_adiacenza[riga][colonna] = generatore.nextInt(massimaPotenzaGenerabile - 1) + 1;
+                                //se la casella sopra è positiva allora la sua opposta deve essere negativa
+                            } else {
+                                matrice_adiacenza[riga][colonna] = -(generatore.nextInt(massimaPotenzaGenerabile - 1) + 1);
+                            }
+                        } else {
+                            if (numeroDebolezze < subisceMax) {
+                                matrice_adiacenza[riga][colonna] = -(generatore.nextInt(massimaPotenzaGenerabile - 1) + 1);
+                            } else {
+                                matrice_adiacenza[riga][colonna] = generatore.nextInt(massimaPotenzaGenerabile - 1) + 1;
+                                //se la casella sopra è positiva allora la sua opposta deve essere negativa
+                            }
+                        }
+                        matrice_adiacenza[colonna][riga] = -matrice_adiacenza[riga][colonna];
 
-                //passo la colonna corrispondente alla riga appena creata
-                do{
+                    }
 
-                    for(int index = 0; index < NUM_ELEMENTI; index++){
-                        if(matrice_adiacenza[index][riga] == DEFAULT){    //se è uguale a -1 vuol dire che non ci sono ancora passata
+                }
+                if (matrice_adiacenza[riga][colonna] > 0) {
+                    somma_potenze_riga += matrice_adiacenza[riga][colonna];
+                    numeroPrevalenze++;
+                } else if (matrice_adiacenza[riga][colonna] < 0) {
+                    somma_debolezze += matrice_adiacenza[riga][colonna];
+                    numeroDebolezze++;
+                }
 
-                            //se ad esempio [ACQUA][TERRA] = 0 allora vuol dire che è la terra ad essere pi forte e quindi
-                            //setto gli indici opposti con un numero diverso da 0;
-                            if(matrice_adiacenza[riga][index] == 0){
-                                matrice_adiacenza[index][riga] = generatore.nextInt(POTENZA_MAX - 1) + 1;
-                                somma_potenze_colonna += matrice_adiacenza[index][riga];
+                int moduloPotenze = Math.abs(somma_potenze_riga);
+                int moduloDebolezze = Math.abs(somma_debolezze);
 
-                            }else matrice_adiacenza[index][riga] = 0;
+
+                //controllo che le debolezze siano uguali alle potenze
+                if (colonna == (this.numeroElementi - 1) && moduloDebolezze != moduloPotenze) {
+                    if (moduloDebolezze < moduloPotenze) {
+                        int potenza_mancante = moduloPotenze - moduloDebolezze;
+                        //parto dalla riga che sto considerando, le altre non le tocco
+                        for (int index2 = riga; index2 < this.numeroElementi; index2++) {
+                            if (matrice_adiacenza[riga][index2] < 0) {  //se il primo che incontro è negativo
+                                matrice_adiacenza[riga][index2] -= potenza_mancante;
+                                matrice_adiacenza[index2][riga] = -matrice_adiacenza[riga][index2];
+                                break;
+                            } else if (matrice_adiacenza[riga][index2] > 0) {
+                                matrice_adiacenza[riga][index2] -= potenza_mancante;
+                                matrice_adiacenza[index2][riga] = -matrice_adiacenza[riga][index2];
+                                break;
+                            }
+                        }
+
+                    } else {   //nel caso in cui ho ottenuto una potenza maggiore
+                        //faccio ripassare tutta la colonna e finche la potenza è maggiore o uguale a 2
+                        //la diminuisco di uno finche ottengo la somma che mi serve
+                        //nel caso finissi di passare la colonna e le cose non andassero ancora bene allora farei
+                        //un'altra passata (per il do-while)
+                        int potenzaMancante = moduloDebolezze - moduloPotenze;
+                        for (int index3 = riga; index3 < this.numeroElementi; index3++) {
+                            if (matrice_adiacenza[riga][index3] > 0) {
+                                matrice_adiacenza[riga][index3] += potenzaMancante;
+                                matrice_adiacenza[index3][riga] = -matrice_adiacenza[riga][index3];
+                                break;
+                            } else if (matrice_adiacenza[riga][index3] < 0) {
+                                matrice_adiacenza[riga][index3] += potenzaMancante;
+                                matrice_adiacenza[index3][riga] = -matrice_adiacenza[riga][index3];
+                                break;
+                            }
                         }
                     }
 
-                }while (somma_potenze_colonna <= somma_potenze_riga);
-
+                }
             }
+        }
 
+        return matrice_adiacenza;
+
+    }
+
+    public void vediTabella(){
+        //Elementi [] elementi = Elementi.values();
+        for (int i = 0; i < numeroElementi; i++) {
+            System.out.print("|");
+            for (int j = 0; j < numeroElementi; j++) {
+                System.out.printf(" %2d ", matriceEquilibrio[i][j]);
+                System.out.print("|");
+            }
+            System.out.print("\n");
         }
     }
 
+    public int getNumeroElementi() {
+        return numeroElementi;
+    }
 
+    public int[][] getMaticeEquilibrio() {
+        return matriceEquilibrio;
+    }
 
-
-    //so che ad esempio la somma degli elementi sulla riga [TERRA][ACQUA] deve essere uguale alla somma degli elementi
-    //sulla riga [ACQUA][TERRA], ossia la somma dei pesi sugli elementi piu forti deve essere uguale alla somma dei pesi
-    //su quelli piu deboli
-
-    /*public EquilibrioDelMondo(){
-
-        //riempio la tabella con -1, così so già dove sono passata e dove no
-
-
-        //inizio a riempire la tabella, scelgo con un rand il primo elemento e con un rand il secondo.
-
-        //prima potrei inserire valori -1 nella tabella così da assicurarmi di essere passata per tutta la tabella
-        int caselle_passate = 0;
-
-        do{
-            Random generatore = new Random();
-            //ottengo un numero casuale compreso fra 0 e 4
-            int riga= generatore.nextInt(Elementi.SCHIFO.ordinal() + 1);
-            int colonna = generatore.nextInt(Elementi.SCHIFO.ordinal() + 1);
-
-            if(riga == colonna) {
-                this.matrice_adiacenza[riga][colonna] = 0;
-                caselle_passate ++;    //lo aumento solo di uno perchè la cella che ho cambiato è una sola
-            }
-
-            if(riga != colonna && this.matrice_adiacenza[riga][colonna] == DEFAULT){  //default puo essere tipo -1
-                int potenza_assegnata = generatore.nextInt(POTENZA_MAX + 1);
-
-                this.matrice_adiacenza[riga][colonna] = potenza_assegnata;
-
-                //se ho assegnato a zero il valore [TERRA][ACQUA] vuol dire che in questo caso l'elemento debole è
-                //la terra e quindi vado a impostare il valore di potenza dell'acqua sulla terra (per esempio)
-                if(potenza_assegnata == 0){
-                    this.matrice_adiacenza[colonna][riga] = generatore.nextInt(POTENZA_MAX + 1);
-                }else this.matrice_adiacenza[colonna][riga] = 0;
-
-                caselle_passate +=2;
-
-            }
-
-        }while(caselle_passate < NUM_ELEMENTI*NUM_ELEMENTI);
-    }*/
-
-
-    //lista di matrici
-
-
-
-
+    public void setMatriceEquilibrio(int[][] matrice) {
+        this.matriceEquilibrio = matrice;
+    }
 }
+
+
+
