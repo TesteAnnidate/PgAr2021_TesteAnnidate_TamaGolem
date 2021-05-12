@@ -1,5 +1,8 @@
 package it.unibs.TesteAnnidate;
 
+import it.unibs.fp.mylib.MyMenu;
+import it.unibs.fp.mylib.NumeriCasuali;
+
 public class Menu {
 
     //creazione equilibrio: generazione del numero casuale che va a determinare la tabella da usare
@@ -46,9 +49,6 @@ public class Menu {
 
 
         }
-        //numPietre = (int) Math.ceil((numElementi + 1)/ 3) +1; //non so se serve
-        //numGolem = (int) Math.ceil((N - 1)* (N - 2)/(2*P)); //idem
-
 
     }
 

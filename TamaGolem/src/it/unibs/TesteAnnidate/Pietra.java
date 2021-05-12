@@ -2,6 +2,10 @@ package it.unibs.TesteAnnidate;
 
 public class Pietra {
 
-    //attributo di tipo elementi
+    private Elementi elementoRiferimento;
+
+    public Pietra(Elementi elemento){
+        this.elementoRiferimento = elemento;
+    }
 
 }
