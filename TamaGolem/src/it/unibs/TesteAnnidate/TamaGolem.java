@@ -6,8 +6,8 @@ public class TamaGolem {
 
 	private ArrayList<Pietra> listaPietre = new ArrayList<>();
     private int vita;
-    
-    
+
+
     // Getters e setters
     public ArrayList<Pietra> getListaPietre() {
 		return listaPietre;
@@ -25,6 +25,12 @@ public class TamaGolem {
     //metodo is esausto
 
     //TamaGolem: generatore;
+
+	public TamaGolem(int numElementi){
+    	//this.listaPietre   caricamento pietre
+
+		this.vita = numElementi * 4
+	}
 
 
     
