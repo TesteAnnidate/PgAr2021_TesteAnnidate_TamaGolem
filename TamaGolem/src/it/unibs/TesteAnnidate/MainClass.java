@@ -13,6 +13,8 @@ public class MainClass {
         }while(!(equilibrio.isCorrect()));
 
         equilibrio.vediTabella();
+        
+        Battaglia scontro1 = new Battaglia(g1, g2, numeElementi)
 
     }
 }

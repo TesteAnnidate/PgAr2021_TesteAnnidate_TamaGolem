@@ -11,6 +11,9 @@ public class Giocatore {
 	private int vittorie;
 	private String nome;
 
+	
+	
+
 	// Costruttore che prende come parametro il nome del giocatore e azzera le vittorie
 	public Giocatore(String nome) {
 		super();

@@ -26,13 +26,16 @@ public class TamaGolem {
     //metodo is esausto
 
     //TamaGolem: generatore;
+	public TamaGolem(){
+		
+	}
 
 	public TamaGolem(int numElementi){
     	//this.listaPietre   caricamento pietre
 		this.vita = numElementi * 4;
 		this.numPietre = ((numElementi +1)/3) + 1;
 	}
-
+	
 
     
     
