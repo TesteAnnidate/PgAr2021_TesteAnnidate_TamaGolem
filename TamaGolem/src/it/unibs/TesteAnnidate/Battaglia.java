@@ -13,6 +13,10 @@ public class Battaglia {
 	private Giocatore g1;
 	private Giocatore g2;
 	private ArrayList<Pietra> saccaComune;
+	private int dimensioneSacca; // S
+	private int numElementi;
+	
+	
 
 	public void scontroCompleto() {
 		g1.setGolem(evocaGolem);
@@ -64,7 +68,28 @@ public class Battaglia {
 		super();
 		this.g1 = g1;
 		this.g2 = g2;
-		this.saccaComune = riempiSacca(numElementi);
+		this.saccaComune = riempiSacca();
+		this.dimensioneSacca = ((2*g1.getNumeroGolem()*g1.getGolem().getPietrePerGolem())/numElementi)/numElementi;
+		this.numElementi = numElementi;
+	}
+
+	public ArrayList<Pietra> riempiSacca(){
+		ArrayList<Pietra> sacca = new ArrayList<Pietra>();
+		int elementoCorrente = 0;
+		int numeroPietrePerElemento = dimensioneSacca/numElementi;
+		int contatorePietre = 0;
+		Elementi [] arrayElementi = Elementi.values();
+		for(int pietreInSacca = 0; pietreInSacca < dimensioneSacca; pietreInSacca++) {
+			
+			
+			sacca.add(new Pietra(arrayElementi[elementoCorrente]));
+			contatorePietre++;
+			if(contatorePietre == numeroPietrePerElemento) {
+				contatorePietre = 0;
+				elementoCorrente++;
+			}
+		}
+		return sacca;
 	}
 
 	public void caricaGolem(g1) {

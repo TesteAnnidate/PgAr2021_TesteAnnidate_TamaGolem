@@ -8,4 +8,14 @@ public class Pietra {
         this.elementoRiferimento = elemento;
     }
 
+	public Elementi getElementoRiferimento() {
+		return elementoRiferimento;
+	}
+
+	public void setElementoRiferimento(Elementi elementoRiferimento) {
+		this.elementoRiferimento = elementoRiferimento;
+	}
+    
+    
+
 }
