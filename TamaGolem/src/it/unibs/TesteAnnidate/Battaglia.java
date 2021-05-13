@@ -9,6 +9,8 @@ public class Battaglia {
 	private static final char[] DANNI_FORMAT = String.format(
 			"Il giocatore 1 ha subito %d danni, mentre il giocatore 2 ne ha subiti %d", danni(elemento1, elemento2),
 			danni(elemento2, elemento1));
+	public static final String PIETRA_AGGIUNTA_BENE = "Il tuo golem ha mangiato bene la pietra";
+	public static final String PIETRA_NON_DISPONIBILE = "Pietra non disponibile!!";
 
 	private Giocatore g1;
 	private Giocatore g2;
@@ -67,15 +69,22 @@ public class Battaglia {
 		this.saccaComune = riempiSacca(numElementi);
 	}
 
-	public void caricaGolem(g1) {
-		
-		Menu
-		(Elemento -> Quantità) (Verifica la presenza delle pietre nella sacca e se il tamaGolem 
-				ha raggiunti il numero max di pietre)
-		g1.getGolem().getClass().add(new Pietra);
-		saccaComune.remove(Pietra);
+	public void caricaGolem(Giocatore g1) {
+		int numPietreDaAggiungere = g1.getGolem().getNumPietre();
+		Pietra daAggiungere = null;
 
-	
+		do {
+			do {
+				daAggiungere = Menu.chiediPietra(this.numElementi);
+				if(!saccaComune.contains(daAggiungere))
+					System.out.println(PIETRA_NON_DISPONIBILE);
+
+			}while(!saccaComune.contains(daAggiungere));
+
+			g1.getGolem().getListaPietre().add(daAggiungere);
+			System.out.println(PIETRA_AGGIUNTA_BENE);
+		}while(g1.getGolem().getListaPietre().size() < numPietreDaAggiungere);
+
 	}
 
 	// Getters e setters

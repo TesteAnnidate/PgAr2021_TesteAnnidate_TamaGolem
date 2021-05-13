@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Giocatore {
 
-	private static final int NUMERO_GOLEM = 7;
 	// private ArrayList<TamaGolem> listaGolem = new ArrayList<>();
 	private int numeroGolem;
 	private TamaGolem golem;
@@ -15,9 +14,8 @@ public class Giocatore {
 	
 
 	// Costruttore che prende come parametro il nome del giocatore e azzera le vittorie
-	public Giocatore(String nome) {
-		super();
-		this.numeroGolem = NUMERO_GOLEM;
+	public Giocatore(String nome, int numeroGolem) {
+		this.numeroGolem = numeroGolem;
 		this.nome = nome;
 		this.vittorie = 0;
 	}
