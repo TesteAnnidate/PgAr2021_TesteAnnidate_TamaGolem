@@ -3,15 +3,10 @@ package it.unibs.TesteAnnidate;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 import it.unibs.fp.mylib.NumeriCasuali;
+import org.w3c.dom.ls.LSOutput;
 
 public class Menu {
 
-    //creazione equilibrio: generazione del numero casuale che va a determinare la tabella da usare
-
-    //mettere le pietre nel golem
-
-
-    //private static final string INSERISCI_NUM_ELEMENTI = "\ninserisci num elementi da usare:";
 
     private static final String SCELTA_DIFFICOLTA = "difficoltà";
     private static final String[] SCEGLI_DIFFICOLTA = {"Facile", "Intermedio", "super-impossibile"};
@@ -23,15 +18,65 @@ public class Menu {
     public static final String SCELTA_SBAGLIATA = "errore, immetti nuovamente la scelta";
     public static final String RICHIESTA_NOME = "Inserisci il tuo nome: ";
     public static final String PIETRA_DA_AGGIUNGERE = "Pietra da aggiungere: ";
+    public static final String COSA_VUOI_FARE = "Cosa vuoi fare?";
+    public static final String INIZIA_UNA_NUOVA_PARTITA = "- 1 : inizia una nuova partita";
+    public static final String ESCI_DAL_GIOCO = "- 0 : esci dal gioco";
 
 
-    private static MyMenu ilMenu;
-    //private static int numPietre; //è il valore P della consegna
+    public static void stampaComandiInizio(){
+        System.out.println(INIZIA_UNA_NUOVA_PARTITA);
+        System.out.println(ESCI_DAL_GIOCO);
+        System.out.print("\n");
+    }
+
+
+    //metodo che gestisce tutto
+    public static void inizioTama(){
+        System.out.println("Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.");
+        int comando;
+        do {
+            stampaComandiInizio();
+            comando = InputDati.leggiIntero(COSA_VUOI_FARE, 0, 1);
+
+            switch (comando) {
+                case 1 -> iniziaScontro();
+                case 0 -> System.out.println("Vai in pace, addio..");
+            }
+
+        }while(comando!=0);
+
+    }
+
+    //metodo per creare l'equilibrio da mettere sopra
+    public static void iniziaScontro(){
+        int numeroElementi = SceltaDifficolta();
+        EquilibrioDelMondo equilibrio = new EquilibrioDelMondo(numeroElementi);
+        //considero l'eccezione
+        do {
+            equilibrio.setMatriceEquilibrio(equilibrio.tabellaProvvisoria());
+        }while(!(equilibrio.isCorrect()));
+
+        //Impostazione del numero di golem per giocatore
+        int pietrePerGolem = ((numeroElementi + 1)/3) + 1;
+        int numGolemPerGiocatore = (numeroElementi - 1)*(numeroElementi - 2)/(2 * pietrePerGolem);
+
+        //creazione gicatori
+        Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
+        Giocatore giocatore2 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
+
+        Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, numeroElementi);
+
+        //inizio battaglia
+        nuovaBattaglia.scontroCompleto();
+
+        equilibrio.vediTabella();
+
+    }
 
 
     //decidere la difficoltà
     public static int SceltaDifficolta() {
-        ilMenu = new MyMenu(SCELTA_DIFFICOLTA, SCEGLI_DIFFICOLTA);
+        MyMenu ilMenu = new MyMenu(SCELTA_DIFFICOLTA, SCEGLI_DIFFICOLTA);
         int scelta = ilMenu.scegli();
         int numElementi = 0;
         boolean sceltaCorretta = true;
@@ -48,6 +93,7 @@ public class Menu {
         }while(!sceltaCorretta);
         return numElementi;
     }
+
 
     public static Giocatore creaGiocatore(int numElementi, int numGolem){
         String nome = InputDati.leggiStringa(RICHIESTA_NOME);
@@ -74,5 +120,6 @@ public class Menu {
 
         return pietraScelta;
     }
+
 }
 
