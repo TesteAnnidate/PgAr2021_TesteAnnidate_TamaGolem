@@ -3,9 +3,7 @@ package it.unibs.TesteAnnidate;
 import java.util.ArrayList;
 
 public class Giocatore {
-
-	// private ArrayList<TamaGolem> listaGolem = new ArrayList<>();
-	private int numeroGolem;
+	private int numeroGolem; //G
 	private TamaGolem golem;
 	private int vittorie;
 	private String nome;
