@@ -16,12 +16,16 @@ public class EquilibrioDelMondo {
 		// TODO Auto-generated constructor stub
 	}
 
+	//potrebbe essere che l'ultima riga venga sballata
 	public boolean isCorrect() {
 		for (int i = 0; i < this.numeroElementi; i++) {
+			int sommaRiga = 0;
 			for (int j = 0; j < this.numeroElementi; j++) {
+				sommaRiga += this.matriceEquilibrio[i][j];
 				if (i != j && this.matriceEquilibrio[i][j] == 0)
 					return false;
 			}
+			if(sommaRiga != 0) return false;
 		}
 		return true;
 	}
@@ -149,8 +153,10 @@ public class EquilibrioDelMondo {
 
 		for(int i = 0; i < numeroElementi; i++){
 			System.out.print(i + ", " + elementi[i]);
+			System.out.print(" ");
 		}
 
+		System.out.print("\n");
 		for (int i = 0; i < numeroElementi; i++) {
 			System.out.print("|");
 			for (int j = 0; j < numeroElementi; j++) {

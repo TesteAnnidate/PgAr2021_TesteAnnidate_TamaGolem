@@ -65,7 +65,7 @@ public class Menu {
         do {
             switch (scelta) {
                 case 1:
-                	numElementi = NumeriCasuali.estraiIntero(3, 5);
+                	numElementi = NumeriCasuali.estraiIntero(4, 5);  //messo 4 perchè le formule non andavano troppo con 3
                 	break;
                 case 2:
                 	numElementi = NumeriCasuali.estraiIntero(6, 8);
@@ -82,9 +82,9 @@ public class Menu {
         return numElementi;
     }
 
-    public static Elementi chiediPietra(int numElementi){
+    public static Elementi chiediPietra(int numElementi, String nomeGiocatore){
         Elementi [] arrayElementi = Elementi.values();
-
+        System.out.print("\n");
         //stampa degli elementi che possono essere selezionati
         for(int i = 0; i < numElementi; i++){
             System.out.print(i + 1 + "-");
@@ -94,7 +94,7 @@ public class Menu {
         Elementi pietraScelta = null;
 
         do {
-            int scelta = InputDati.leggiIntero(Costanti.PIETRA_DA_AGGIUNGERE, 1, numElementi);
+            int scelta = InputDati.leggiIntero(nomeGiocatore + Costanti.PIETRA_DA_AGGIUNGERE, 1, numElementi);
             if(scelta <= numElementi){
                 pietraScelta = arrayElementi[scelta - 1];
             } else seValida = false;
@@ -140,7 +140,7 @@ public class Menu {
         
         //Impostazione del numero di golem per giocatore
         int pietrePerGolem = ((numeroElementi + 1)/3) + 1;
-        int numGolemPerGiocatore = (numeroElementi - 1)*(numeroElementi - 2)/(2 * pietrePerGolem);
+        int numGolemPerGiocatore = ((numeroElementi - 1)*(numeroElementi - 2))/(2 * pietrePerGolem);
         
         
         

@@ -10,7 +10,7 @@ public class TamaGolem {
 
 	// Costruttore
 	public TamaGolem(int numElementi) {
-		this.vita = numElementi * 4;
+		this.vita = numElementi * 2;
 		this.pietrePerGolem = ((numElementi + 1) / 3) + 1;
 	}
 	

@@ -43,7 +43,7 @@ public class Battaglia {
 		this.g1 = g1;
 		this.g2 = g2;
 		this.equilibrio = equilibrio;
-		this.dimensioneSacca = (int)Math.ceil(((2 * g1.getNumeroGolem()*g1.getGolem().getPietrePerGolem())/equilibrio.getNumeroElementi()))/equilibrio.getNumeroElementi();
+		this.dimensioneSacca = Math.round(((2 * g1.getNumeroGolem() * g1.getGolem().getPietrePerGolem())/equilibrio.getNumeroElementi())) * equilibrio.getNumeroElementi();
 		this.saccaComune = new ArrayList<Pietra>();
 		
 	}
@@ -83,8 +83,16 @@ public class Battaglia {
 					System.out.println(ELEMENTI_UGUALI);
 				indicePietreTama1++;
 				indicePietreTama2++;
-			}
 
+				//se gli indici superano l'ultimo indice disponibile dell'array di pietre del golem allora si fanno ripartire da
+				//0 così da continuare a ciclare
+				if(indicePietreTama1 == g1.getGolem().getListaPietre().size()){
+					indicePietreTama1 = 0;
+					indicePietreTama2 = 0;
+				}
+
+			}
+			//deve stopparti quando gli indici sono = numPietrePerGolem - 1
 		} while (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() > 0);
 
 		if (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() <= 0) {
@@ -92,8 +100,10 @@ public class Battaglia {
 			indicePietreTama2 = 0;
 			g2.setNumeroGolem(g2.getNumeroGolem() - 1);
 			System.out.println(String.format(MORTE_GOLEM, g2.getNome()));
-			if (g2.getNumeroGolem() > 0)
+			if (g2.getNumeroGolem() > 0){
 				g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
+				caricaGolem(g2);
+			}
 		}
 
 		else if (g1.getGolem().getVita() <= 0 && g2.getGolem().getVita() > 0) {
@@ -101,8 +111,10 @@ public class Battaglia {
 			indicePietreTama1 = 0;
 			g1.setNumeroGolem(g1.getNumeroGolem() - 1);
 			System.out.println(String.format(MORTE_GOLEM, g1.getNome()));
-			if (g1.getNumeroGolem() > 0)
+			if (g1.getNumeroGolem() > 0){
 				g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
+				caricaGolem(g1);
+			}
 		}
 	}
 
@@ -140,22 +152,22 @@ public class Battaglia {
 		return sacca;
 	}
 
-	public void caricaGolem(Giocatore g1) {
-		int numPietreDaAggiungere = g1.getGolem().getPietrePerGolem();
+	public void caricaGolem(Giocatore giocatore) {
+		int numPietreDaAggiungere = giocatore.getGolem().getPietrePerGolem();
 		Pietra daAggiungere = null;
 
 		do {
 			do {
-				daAggiungere = new Pietra(Menu.chiediPietra(equilibrio.getNumeroElementi()));
+				daAggiungere = new Pietra(Menu.chiediPietra(equilibrio.getNumeroElementi(), giocatore.getNome()));
 				if (!(saccaComune.contains(daAggiungere)))
 					System.out.println(PIETRA_NON_DISPONIBILE);
 
 			} while (!saccaComune.contains(daAggiungere));
 
-			g1.getGolem().getListaPietre().add(daAggiungere);
+			giocatore.getGolem().getListaPietre().add(daAggiungere);
 			saccaComune.remove(daAggiungere);
 			System.out.println(PIETRA_AGGIUNTA_BENE);
-		} while (g1.getGolem().getListaPietre().size() < numPietreDaAggiungere);
+		} while (giocatore.getGolem().getListaPietre().size() < numPietreDaAggiungere);
 
 	}
 
