@@ -12,14 +12,14 @@ public class Menu {
 			+ " \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\ \r\n"
 			+ "  \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/   \\/_____/ \r\n"
 			+ "                                                       ";
-	
+
 	public static final String TAMAGOLEM = " ______   ______     __    __     ______     ______     ______     __         ______     __    __    \r\n"
 			+ "/\\__  _\\ /\\  __ \\   /\\ \"-./  \\   /\\  __ \\   /\\  ___\\   /\\  __ \\   /\\ \\       /\\  ___\\   /\\ \"-./  \\   \r\n"
 			+ "\\/_/\\ \\/ \\ \\  __ \\  \\ \\ \\-./\\ \\  \\ \\  __ \\  \\ \\ \\__ \\  \\ \\ \\/\\ \\  \\ \\ \\____  \\ \\  __\\   \\ \\ \\-./\\ \\  \r\n"
 			+ "   \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\ \\ \\_\\ \r\n"
 			+ "    \\/_/   \\/_/\\/_/   \\/_/  \\/_/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/   \\/_____/   \\/_/  \\/_/ \r\n"
 			+ "                                                                                                     ";
-	
+
 	public static final String TAMAGOLEM2 = " .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. .----------------. \r\n"
 			+ "| .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |\r\n"
 			+ "| |  _________   | | |      __      | | | ____    ____ | | |      __      | | |    ______    | | |     ____     | | |   _____      | | |  _________   | | | ____    ____ | |\r\n"
@@ -30,7 +30,7 @@ public class Menu {
 			+ "| |   |_____|    | | ||____|  |____|| | ||_____||_____|| | ||____|  |____|| | |  `._____.'   | | |   `.____.'   | | |  |________|  | | | |_________|  | | ||_____||_____|| |\r\n"
 			+ "| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |\r\n"
 			+ "| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |\r\n"
-			+ " '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' "; 
+			+ " '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' ";
 	// creazione equilibrio: generazione del numero casuale che va a determinare la
 	// tabella da usare
 
@@ -42,127 +42,130 @@ public class Menu {
 	private static MyMenu ilMenu;
 	// private static int numPietre; //è il valore P della consegna
 
-	
+	private static final String SCELTA_DIFFICOLTA = "difficoltà";
+	private static final String[] SCEGLI_DIFFICOLTA = { "Facile", "Intermedio", "super-impossibile" };
 
-    private static final String SCELTA_DIFFICOLTA = "difficoltà";
-    private static final String[] SCEGLI_DIFFICOLTA = {"Facile", "Intermedio", "super-impossibile"};
+	private static final String[] FINE_PARTITA = { "stampa equilibrio", "" };
 
+	private static final String CONCLUSIONE = "Vai in pace, addio..";
+	public static final String SCELTA_SBAGLIATA = "errore, immetti nuovamente la scelta";
+	public static final String RICHIESTA_NOME = "Inserisci il tuo nome: ";
+	public static final String PIETRA_DA_AGGIUNGERE = "Pietra da aggiungere: ";
+	public static final String COSA_VUOI_FARE = "Cosa vuoi fare?  ";
+	public static final String INIZIA_UNA_NUOVA_PARTITA = "- 1 : inizia una nuova partita";
+	public static final String ESCI_DAL_GIOCO = "- 0 : esci dal gioco";
 
-    private static final String[] FINE_PARTITA = {"stampa equilibrio", ""};
+	public static int richiestaComando() {
+		System.out.println(INIZIA_UNA_NUOVA_PARTITA);
+		System.out.println(ESCI_DAL_GIOCO);
+		System.out.print("\n");
+		return InputDati.leggiIntero(COSA_VUOI_FARE, 0, 1);
+	}
 
-    private static final String CONCLUSIONE = "Vai in pace, addio..";
-    public static final String SCELTA_SBAGLIATA = "errore, immetti nuovamente la scelta";
-    public static final String RICHIESTA_NOME = "Inserisci il tuo nome: ";
-    public static final String PIETRA_DA_AGGIUNGERE = "Pietra da aggiungere: ";
-    public static final String COSA_VUOI_FARE = "Cosa vuoi fare?  ";
-    public static final String INIZIA_UNA_NUOVA_PARTITA = "- 1 : inizia una nuova partita";
-    public static final String ESCI_DAL_GIOCO = "- 0 : esci dal gioco";
+	// stampa intestazione
+	public static void benvenuto() {
+		System.out.println("--------------------------------------------------------------");
+		System.out.println("Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.");
+		System.out.println("--------------------------------------------------------------");
+	}
 
+	// metodo che gestisce tutto
+	public static void inizioTama() {
+		benvenuto();
+		int comando;
+		do {
+			comando = richiestaComando();
 
-    public static int richiestaComando(){
-        System.out.println(INIZIA_UNA_NUOVA_PARTITA);
-        System.out.println(ESCI_DAL_GIOCO);
-        System.out.print("\n");
-        return InputDati.leggiIntero(COSA_VUOI_FARE, 0, 1);
-    }
+			switch (comando) {
+			case 1:
+				iniziaScontro();
+				break;
+			case 0:
+				System.out.println(CONCLUSIONE);
+				break;
+			}
 
-    //stampa intestazione
-    public static void benvenuto(){
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.");
-        System.out.println("--------------------------------------------------------------");
-    }
+		} while (comando != 0);
 
+	}
 
-    //metodo che gestisce tutto
-    public static void inizioTama(){
-        benvenuto();
-        int comando;
-        do {
-            comando = richiestaComando();
+	// metodo per creare l'equilibrio da mettere sopra
+	public static void iniziaScontro() {
+		int numeroElementi = SceltaDifficolta();
+		EquilibrioDelMondo equilibrio = new EquilibrioDelMondo(numeroElementi);
+		// considero l'eccezione
+		do {
+			equilibrio.setMatriceEquilibrio(equilibrio.tabellaProvvisoria());
+		} while (!(equilibrio.isCorrect()));
 
-            switch (comando) {
-                case 1 -> iniziaScontro();
-                case 0 -> System.out.println(CONCLUSIONE);
-            }
+		// Impostazione del numero di golem per giocatore
+		int pietrePerGolem = ((numeroElementi + 1) / 3) + 1;
+		int numGolemPerGiocatore = (numeroElementi - 1) * (numeroElementi - 2) / (2 * pietrePerGolem);
 
-        }while(comando!=0);
+		// creazione gicatori
+		Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
+		Giocatore giocatore2 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
 
-    }
+		Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, numeroElementi, equilibrio);
 
-    //metodo per creare l'equilibrio da mettere sopra
-    public static void iniziaScontro(){
-        int numeroElementi = SceltaDifficolta();
-        EquilibrioDelMondo equilibrio = new EquilibrioDelMondo(numeroElementi);
-        //considero l'eccezione
-        do {
-            equilibrio.setMatriceEquilibrio(equilibrio.tabellaProvvisoria());
-        }while(!(equilibrio.isCorrect()));
+		// inizio battaglia
+		nuovaBattaglia.scontroCompleto();
 
-        //Impostazione del numero di golem per giocatore
-        int pietrePerGolem = ((numeroElementi + 1)/3) + 1;
-        int numGolemPerGiocatore = (numeroElementi - 1)*(numeroElementi - 2)/(2 * pietrePerGolem);
+		equilibrio.vediTabella();
 
-        //creazione gicatori
-        Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
-        Giocatore giocatore2 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
+	}
 
-        Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, numeroElementi, equilibrio);
+	// decidere la difficoltà
+	public static int SceltaDifficolta() {
+		MyMenu ilMenu = new MyMenu(SCELTA_DIFFICOLTA, SCEGLI_DIFFICOLTA);
+		int scelta = ilMenu.scegli();
+		int numElementi = 0;
+		boolean sceltaCorretta = true;
+		do {
+			switch (scelta) {
+			case 1:
+				numElementi = NumeriCasuali.estraiIntero(3, 5);
+				break;
+			case 2:
+				numElementi = NumeriCasuali.estraiIntero(6, 8);
+				break;
+			case 3:
+				numElementi = NumeriCasuali.estraiIntero(9, 10);
+				break;
+			default:
+				System.out.println(SCELTA_SBAGLIATA);
+				sceltaCorretta = false;
+				break;
+			}
+		} while (!sceltaCorretta);
+		return numElementi;
+	}
 
-        //inizio battaglia
-        nuovaBattaglia.scontroCompleto();
+	public static Giocatore creaGiocatore(int numElementi, int numGolem) {
+		String nome = InputDati.leggiStringa(RICHIESTA_NOME);
+		return new Giocatore(nome, numGolem);
+	}
 
-        equilibrio.vediTabella();
+	public static Elementi chiediPietra(int numElementi) {
+		Elementi[] arrayElementi = Elementi.values();
 
-    }
+		// stampa degli elementi che possono essere selezionati
+		for (int i = 0; i < numElementi; i++) {
+			System.out.print(i + 1 + "-");
+			System.out.println(arrayElementi[i]);
+		}
+		boolean seValida = true;
+		Elementi pietraScelta = null;
 
+		do {
+			int scelta = InputDati.leggiIntero(PIETRA_DA_AGGIUNGERE);
+			if (scelta <= numElementi) {
+				pietraScelta = arrayElementi[scelta];
+			} else
+				seValida = false;
+		} while (!seValida);
 
-    //decidere la difficoltà
-    public static int SceltaDifficolta() {
-        MyMenu ilMenu = new MyMenu(SCELTA_DIFFICOLTA, SCEGLI_DIFFICOLTA);
-        int scelta = ilMenu.scegli();
-        int numElementi = 0;
-        boolean sceltaCorretta = true;
-        do {
-            switch (scelta) {
-                case 1 -> numElementi = NumeriCasuali.estraiIntero(3, 5);
-                case 2 -> numElementi = NumeriCasuali.estraiIntero(6, 8);
-                case 3 -> numElementi = NumeriCasuali.estraiIntero(9, 10);
-                default -> {
-                    System.out.println(SCELTA_SBAGLIATA);
-                    sceltaCorretta = false;
-                }
-            }
-        }while(!sceltaCorretta);
-        return numElementi;
-    }
-
-
-    public static Giocatore creaGiocatore(int numElementi, int numGolem){
-        String nome = InputDati.leggiStringa(RICHIESTA_NOME);
-        return new Giocatore(nome,numGolem);
-    }
-
-    public static Elementi chiediPietra(int numElementi){
-        Elementi [] arrayElementi = Elementi.values();
-
-        //stampa degli elementi che possono essere selezionati
-        for(int i = 0; i < numElementi; i++){
-            System.out.print(i + 1 + "-");
-            System.out.println(arrayElementi[i]);
-        }
-        boolean seValida= true;
-        Elementi pietraScelta = null;
-
-        do {
-            int scelta = InputDati.leggiIntero(PIETRA_DA_AGGIUNGERE);
-            if(scelta <= numElementi){
-                pietraScelta = arrayElementi[scelta];
-            } else seValida = false;
-        }while(!seValida);
-
-        return pietraScelta;
-    }
-
+		return pietraScelta;
+	}
 
 }
