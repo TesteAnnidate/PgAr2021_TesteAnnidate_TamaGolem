@@ -17,5 +17,8 @@ public class MainClass {
 		 * 
 		 * Battaglia scontro1 = new Battaglia(g1, g2, numeElementi)
 		 */
+
+		Menu.inizioTama();
+
 	}
 }

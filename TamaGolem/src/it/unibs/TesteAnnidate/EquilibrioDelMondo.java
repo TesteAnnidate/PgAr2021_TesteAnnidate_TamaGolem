@@ -144,7 +144,13 @@ public class EquilibrioDelMondo {
 	}
 
 	public void vediTabella() {
-		// Elementi [] elementi = Elementi.values();
+		Elementi [] elementi = Elementi.values();
+		//stampo elementi
+
+		for(int i = 0; i < numeroElementi; i++){
+			System.out.print(i + ", " + elementi[i]);
+		}
+
 		for (int i = 0; i < numeroElementi; i++) {
 			System.out.print("|");
 			for (int j = 0; j < numeroElementi; j++) {
