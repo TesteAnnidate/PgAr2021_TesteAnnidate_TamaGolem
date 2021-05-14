@@ -3,15 +3,13 @@ package it.unibs.TesteAnnidate;
 import java.util.ArrayList;
 
 public class Giocatore {
-	private int numeroGolem; //G
+	private int numeroGolem; // G
 	private TamaGolem golem;
 	private int vittorie;
 	private String nome;
 
-	
-	
-
-	// Costruttore che prende come parametro il nome del giocatore e azzera le vittorie
+	// Costruttore che prende come parametro il nome del giocatore e azzera le
+	// vittorie
 	public Giocatore(String nome, int numeroGolem) {
 		this.numeroGolem = numeroGolem;
 		this.nome = nome;
