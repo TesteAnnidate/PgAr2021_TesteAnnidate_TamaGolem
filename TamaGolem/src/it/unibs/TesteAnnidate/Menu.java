@@ -3,7 +3,6 @@ package it.unibs.TesteAnnidate;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 import it.unibs.fp.mylib.NumeriCasuali;
-import org.w3c.dom.ls.LSOutput;
 
 public class Menu {
 
@@ -28,33 +27,40 @@ public class Menu {
 
     private static final String[] FINE_PARTITA = {"stampa equilibrio", ""};
 
-    private static final String CONCLUSIONE = "Alla prossima";
+    private static final String CONCLUSIONE = "Vai in pace, addio..";
     public static final String SCELTA_SBAGLIATA = "errore, immetti nuovamente la scelta";
     public static final String RICHIESTA_NOME = "Inserisci il tuo nome: ";
     public static final String PIETRA_DA_AGGIUNGERE = "Pietra da aggiungere: ";
-    public static final String COSA_VUOI_FARE = "Cosa vuoi fare?";
+    public static final String COSA_VUOI_FARE = "Cosa vuoi fare?  ";
     public static final String INIZIA_UNA_NUOVA_PARTITA = "- 1 : inizia una nuova partita";
     public static final String ESCI_DAL_GIOCO = "- 0 : esci dal gioco";
 
 
-    public static void stampaComandiInizio(){
+    public static int richiestaComando(){
         System.out.println(INIZIA_UNA_NUOVA_PARTITA);
         System.out.println(ESCI_DAL_GIOCO);
         System.out.print("\n");
+        return InputDati.leggiIntero(COSA_VUOI_FARE, 0, 1);
+    }
+
+    //stampa intestazione
+    public static void benvenuto(){
+        System.out.println("--------------------------------------------------------------");
+        System.out.println("Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.");
+        System.out.println("--------------------------------------------------------------");
     }
 
 
     //metodo che gestisce tutto
     public static void inizioTama(){
-        System.out.println("Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.");
+        benvenuto();
         int comando;
         do {
-            stampaComandiInizio();
-            comando = InputDati.leggiIntero(COSA_VUOI_FARE, 0, 1);
+            comando = richiestaComando();
 
             switch (comando) {
                 case 1 -> iniziaScontro();
-                case 0 -> System.out.println("Vai in pace, addio..");
+                case 0 -> System.out.println(CONCLUSIONE);
             }
 
         }while(comando!=0);
@@ -78,7 +84,7 @@ public class Menu {
         Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
         Giocatore giocatore2 = creaGiocatore(numeroElementi, numGolemPerGiocatore);
 
-        Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, numeroElementi);
+        Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, numeroElementi, equilibrio);
 
         //inizio battaglia
         nuovaBattaglia.scontroCompleto();
