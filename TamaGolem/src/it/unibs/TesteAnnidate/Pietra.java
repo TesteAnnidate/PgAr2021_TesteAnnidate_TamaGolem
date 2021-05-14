@@ -16,4 +16,20 @@ public class Pietra {
 		this.elementoRiferimento = elementoRiferimento;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pietra other = (Pietra) obj;
+		if (!(elementoRiferimento.toString().equals(other.elementoRiferimento.toString())))
+			return false;
+		return true;
+	}
+	
+
 }

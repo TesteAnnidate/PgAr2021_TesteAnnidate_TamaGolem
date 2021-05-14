@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 public class Giocatore {
 	private int numeroGolem; // G
-	private TamaGolem golem;
+	private TamaGolem golem; 
 	private int vittorie;
 	private String nome;
 
 	// Costruttore che prende come parametro il nome del giocatore e azzera le
 	// vittorie
-	public Giocatore(String nome, int numeroGolem) {
+	public Giocatore(String nome, int numeroGolem, int numeroElementi) {
 		this.numeroGolem = numeroGolem;
 		this.nome = nome;
 		this.vittorie = 0;
+		this.golem = new TamaGolem(numeroElementi);
 	}
 	// Getters e setters
 

@@ -8,6 +8,12 @@ public class TamaGolem {
 	private int vita;
 	private int pietrePerGolem; // P
 
+	// Costruttore
+	public TamaGolem(int numElementi) {
+		this.vita = numElementi * 4;
+		this.pietrePerGolem = ((numElementi + 1) / 3) + 1;
+	}
+	
 	// Getters e setters
 	public ArrayList<Pietra> getListaPietre() {
 		return listaPietre;
@@ -33,8 +39,5 @@ public class TamaGolem {
 		this.pietrePerGolem = pietrePerGolem;
 	}
 
-	public TamaGolem(int numElementi) {
-		this.vita = numElementi * 4;
-		this.pietrePerGolem = ((numElementi + 1) / 3) + 1;
-	}
+	
 }

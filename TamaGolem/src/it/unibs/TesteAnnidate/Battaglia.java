@@ -10,11 +10,7 @@ public class Battaglia {
 	public static final String VITTORIA = "Bravo %s, HAI VINTO!!";
 	public static final String PIETRA_AGGIUNTA_BENE = "Il tuo golem ha mangiato bene la pietra";
 	public static final String PIETRA_NON_DISPONIBILE = "Pietra non disponibile!!";
-	
 
-
-	
-	
 	static String GOLEM = "                                                                                                			\r\n"
 			+ "			                                                                                                     \r\n"
 			+ "                 &#######                           			                        .#######&                \r\n"
@@ -35,18 +31,27 @@ public class Battaglia {
 			+ "            @@@%&%%       &@@@@@%%%@              			              @%%&@@@@@.       %%%%@&&           \r\n"
 			+ "			                                                                                                     \r\n"
 			+ "                                                                                                              \r\n";
-	
-	
+
 	private Giocatore g1;
 	private Giocatore g2;
 	private ArrayList<Pietra> saccaComune;
 	private int dimensioneSacca; // S
-	private int numElementi;
 	private EquilibrioDelMondo equilibrio;
 
+	// Costruttore
+	public Battaglia(Giocatore g1, Giocatore g2, EquilibrioDelMondo equilibrio) {
+		this.g1 = g1;
+		this.g2 = g2;
+		this.equilibrio = equilibrio;
+		this.dimensioneSacca = (int)Math.ceil(((2 * g1.getNumeroGolem()*g1.getGolem().getPietrePerGolem())/equilibrio.getNumeroElementi()))/equilibrio.getNumeroElementi();
+		this.saccaComune = new ArrayList<Pietra>();
+		
+	}
+
 	public void scontroCompleto() {
-		g1.setGolem(new TamaGolem(numElementi));
-		g2.setGolem(new TamaGolem(numElementi));
+		saccaComune = riempiSacca(dimensioneSacca);
+		g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
+		g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		caricaGolem(g1);
 		caricaGolem(g2);
 
@@ -88,7 +93,7 @@ public class Battaglia {
 			g2.setNumeroGolem(g2.getNumeroGolem() - 1);
 			System.out.println(String.format(MORTE_GOLEM, g2.getNome()));
 			if (g2.getNumeroGolem() > 0)
-				g2.setGolem(new TamaGolem(numElementi));
+				g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		}
 
 		else if (g1.getGolem().getVita() <= 0 && g2.getGolem().getVita() > 0) {
@@ -97,7 +102,7 @@ public class Battaglia {
 			g1.setNumeroGolem(g1.getNumeroGolem() - 1);
 			System.out.println(String.format(MORTE_GOLEM, g1.getNome()));
 			if (g1.getNumeroGolem() > 0)
-				g1.setGolem(new TamaGolem(numElementi));
+				g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		}
 	}
 
@@ -117,22 +122,10 @@ public class Battaglia {
 		return matEquilibrio[e1][e2];
 	}
 
-	// Costruttore
-	public Battaglia(Giocatore g1, Giocatore g2, int numElementi, EquilibrioDelMondo equilibrio) {
-		super();
-		this.g1 = g1;
-		this.g2 = g2;
-		this.saccaComune = riempiSacca();
-		this.dimensioneSacca = ((2 * g1.getNumeroGolem() * g1.getGolem().getPietrePerGolem()) / numElementi)
-				/ numElementi;
-		this.numElementi = numElementi;
-		this.equilibrio = equilibrio;
-	}
-
-	public ArrayList<Pietra> riempiSacca() {
+	public ArrayList<Pietra> riempiSacca(int dimensioneSacca) {
 		ArrayList<Pietra> sacca = new ArrayList<Pietra>();
 		int elementoCorrente = 0;
-		int numeroPietrePerElemento = dimensioneSacca / numElementi;
+		int numeroPietrePerElemento = dimensioneSacca / equilibrio.getNumeroElementi();
 		int contatorePietre = 0;
 		Elementi[] arrayElementi = Elementi.values();
 		for (int pietreInSacca = 0; pietreInSacca < dimensioneSacca; pietreInSacca++) {
@@ -153,8 +146,8 @@ public class Battaglia {
 
 		do {
 			do {
-				daAggiungere = new Pietra(Menu.chiediPietra(this.numElementi));
-				if (!saccaComune.contains(daAggiungere))
+				daAggiungere = new Pietra(Menu.chiediPietra(equilibrio.getNumeroElementi()));
+				if (!(saccaComune.contains(daAggiungere)))
 					System.out.println(PIETRA_NON_DISPONIBILE);
 
 			} while (!saccaComune.contains(daAggiungere));
@@ -166,11 +159,6 @@ public class Battaglia {
 
 	}
 
-	
-	
-	
-	
-	
 	// Getters e setters
 	public Giocatore getG1() {
 		return g1;
@@ -202,14 +190,6 @@ public class Battaglia {
 
 	public void setDimensioneSacca(int dimensioneSacca) {
 		this.dimensioneSacca = dimensioneSacca;
-	}
-
-	public int getNumElementi() {
-		return numElementi;
-	}
-
-	public void setNumElementi(int numElementi) {
-		this.numElementi = numElementi;
 	}
 
 	public EquilibrioDelMondo getEquilibrio() {

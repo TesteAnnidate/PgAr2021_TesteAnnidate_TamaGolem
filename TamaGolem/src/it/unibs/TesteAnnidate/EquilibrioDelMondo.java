@@ -38,7 +38,7 @@ public class EquilibrioDelMondo {
 
 	public int[][] tabellaProvvisoria() {
 		int positivo = 1;
-		int massimaPotenzaGenerabile = this.numeroElementi / 2 + this.numeroElementi / 4;
+		int massimaPotenzaGenerabile = numeroElementi/2 + 2;
 		int prevaleMax = this.numeroElementi / 2; // massimo numero di elementi sul qual epuo prevalere
 		int subisceMax = this.numeroElementi / 2;
 
