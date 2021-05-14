@@ -4,6 +4,10 @@ import java.util.Random;
 
 public class TestClass {
     public static void main(String[] args) {
+    	System.out.println(Menu.HELLO);
+    	System.out.println(Menu.TAMAGOLEM);
+    	System.out.println(Menu.TAMAGOLEM2);
+    	System.out.println(Battaglia.GOLEM);
         /*int NUM_ELEMENTI = 10;
         int POTENZA_MAX = NUM_ELEMENTI/2 + NUM_ELEMENTI/4;   //massimo valore di danno che un elemento può fare prevalendo su un altro
         //numero elementi/2 + numero elementi/4
