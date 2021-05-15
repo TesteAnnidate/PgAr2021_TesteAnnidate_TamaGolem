@@ -2,6 +2,8 @@ package it.unibs.TesteAnnidate;
 
 import java.util.ArrayList;
 
+import it.unibs.fp.mylib.InputDati;
+
 public class Battaglia {
 
 	public static final String MORTE_GOLEM = "Il Golem di %s è morto!";
@@ -43,7 +45,7 @@ public class Battaglia {
 		this.g1 = g1;
 		this.g2 = g2;
 		this.equilibrio = equilibrio;
-		this.dimensioneSacca = Math.round(((2 * g1.getNumeroGolem() * g1.getGolem().getPietrePerGolem())/equilibrio.getNumeroElementi())) * equilibrio.getNumeroElementi();
+		this.dimensioneSacca = (int)Math.round(((2 * (double)g1.getNumeroGolem() * (double)g1.getGolem().getPietrePerGolem())/(double)equilibrio.getNumeroElementi())) * equilibrio.getNumeroElementi();
 		this.saccaComune = new ArrayList<Pietra>();
 		
 	}
@@ -54,6 +56,8 @@ public class Battaglia {
 		g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		caricaGolem(g1);
 		caricaGolem(g2);
+		while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
+			seStessePietre(g2);
 
 		while (g1.getNumeroGolem() > 0 && g2.getNumeroGolem() > 0) {
 			scontroSingolo();
@@ -71,16 +75,17 @@ public class Battaglia {
 		int indicePietreTama1 = 0;
 		int indicePietreTama2 = 0;
 		do {
-
 			lanciaPietre(indicePietreTama1, indicePietreTama2);
-
+			System.out.println(GOLEM);
+			
 			if (g1.getGolem().getVita() > 0 && g2.getGolem().getVita() > 0) {
 				if (danni(indicePietreTama1, indicePietreTama2) > 0)
 					System.out.println(String.format(DANNI, g2.getNome(), danni(indicePietreTama1, indicePietreTama2)));
 				else if (danni(indicePietreTama1, indicePietreTama2) < 0)
-					System.out.println(String.format(DANNI, g1.getNome(), danni(indicePietreTama1, indicePietreTama2)));
-				else
+					System.out.println(String.format(DANNI, g1.getNome(), -danni(indicePietreTama1, indicePietreTama2)));
+				else if(danni(indicePietreTama1, indicePietreTama2) == 0)
 					System.out.println(ELEMENTI_UGUALI);
+				InputDati.leggiIntero("Per lanciare le pietre permi 0", 0, 0);
 				indicePietreTama1++;
 				indicePietreTama2++;
 
@@ -103,6 +108,8 @@ public class Battaglia {
 			if (g2.getNumeroGolem() > 0){
 				g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 				caricaGolem(g2);
+				while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
+					seStessePietre(g2);
 			}
 		}
 
@@ -114,6 +121,8 @@ public class Battaglia {
 			if (g1.getNumeroGolem() > 0){
 				g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 				caricaGolem(g1);
+				while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
+					seStessePietre(g1);
 			}
 		}
 	}
@@ -137,7 +146,7 @@ public class Battaglia {
 	public ArrayList<Pietra> riempiSacca(int dimensioneSacca) {
 		ArrayList<Pietra> sacca = new ArrayList<Pietra>();
 		int elementoCorrente = 0;
-		int numeroPietrePerElemento = dimensioneSacca / equilibrio.getNumeroElementi();
+		int numeroPietrePerElemento = (int)((double)dimensioneSacca / (double)equilibrio.getNumeroElementi());
 		int contatorePietre = 0;
 		Elementi[] arrayElementi = Elementi.values();
 		for (int pietreInSacca = 0; pietreInSacca < dimensioneSacca; pietreInSacca++) {
@@ -155,6 +164,7 @@ public class Battaglia {
 	public void caricaGolem(Giocatore giocatore) {
 		int numPietreDaAggiungere = giocatore.getGolem().getPietrePerGolem();
 		Pietra daAggiungere = null;
+		System.out.println(String.format("%s carica il tuo golem", giocatore.getNome()));
 
 		do {
 			do {
@@ -170,6 +180,19 @@ public class Battaglia {
 		} while (giocatore.getGolem().getListaPietre().size() < numPietreDaAggiungere);
 
 	}
+	//nel caso in cui il secondo giocatore abbia scelto le stesse pietre del primo allora si svuota il suo golem e le pietre
+		//che aveva mangiato vengono rimesse nella sacca comune e gli viene chiesto nuovamente di riempire la sacca
+		public void seStessePietre(Giocatore giocatore){
+			System.out.println("I vostri golem hanno mangiato le stesse pietre!!!");
+			System.out.println("...il tuo golem le sta vomitando nella sacca comune...");
+
+			//le pietre che ha vomitato vengono riaggiunte alla sacca
+			saccaComune.addAll(giocatore.getGolem().getListaPietre());
+			giocatore.getGolem().getListaPietre().clear();
+			System.out.print("\n");
+			System.out.println("Ora puoi aggiungere nuove pietre!!");
+			caricaGolem(giocatore);
+		}
 
 	// Getters e setters
 	public Giocatore getG1() {

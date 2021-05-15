@@ -151,18 +151,27 @@ public class EquilibrioDelMondo {
 		Elementi [] elementi = Elementi.values();
 		//stampo elementi
 
+		for(int i = 0; i < numeroElementi; i++) {
+			for(int j = 0; j < numeroElementi; j++) {
+				if(matriceEquilibrio[i][j] < 0)
+					matriceEquilibrio[i][j] = 0;
+			}
+				
+		}
+			
 		for(int i = 0; i < numeroElementi; i++){
-			System.out.print(i + ", " + elementi[i]);
-			System.out.print(" ");
+			System.out.print(String.format(" %-9s", elementi[i]));
 		}
 
 		System.out.print("\n");
 		for (int i = 0; i < numeroElementi; i++) {
 			System.out.print("|");
 			for (int j = 0; j < numeroElementi; j++) {
-				System.out.printf(" %2d ", matriceEquilibrio[i][j]);
+				System.out.printf(" %7d ", matriceEquilibrio[i][j]);
 				System.out.print("|");
 			}
+			System.out.print(" ");
+			System.out.println(elementi[i]);
 			System.out.print("\n");
 		}
 	}

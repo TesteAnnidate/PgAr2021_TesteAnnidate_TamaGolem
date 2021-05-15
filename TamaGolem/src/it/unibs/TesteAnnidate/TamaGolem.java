@@ -11,7 +11,7 @@ public class TamaGolem {
 	// Costruttore
 	public TamaGolem(int numElementi) {
 		this.vita = numElementi * 2;
-		this.pietrePerGolem = ((numElementi + 1) / 3) + 1;
+		this.pietrePerGolem = (int)(((double)numElementi + 1) / 3) + 1;
 	}
 	
 	// Getters e setters
