@@ -1,10 +1,11 @@
 package it.unibs.TesteAnnidate;
 
 public class Costanti {
-    public static final String TRATTINI = "--------------------------------------------------------------";
+    public static final int NUMERO_SPAZI = 100;
+	public static final String TRATTINI = "--------------------------------------------------------------";
     public static final String BENVENUTO = "Benvenuto in TamaGolem, di seguito potrai scegliere cosa fare.";
 
-    public static final String SCELTA_DIFFICOLTA = "difficolt√†";
+    public static final String SCELTA_DIFFICOLTA = "difficolta'†";
     public static final String[] SCEGLI_DIFFICOLTA = {"Facile", "Intermedio", "super-impossibile"};
 
     public static final String CONCLUSIONE = "Vai in pace, addio..";
@@ -26,15 +27,26 @@ public class Costanti {
 	public static final String DANNI = "Il Golem di %s ha subito %d danni";
 	public static final String ELEMENTI_UGUALI = "Il lancio delle pietre non ha causato danni!";
 	public static final String PIETRE_IN_SACCA = "%s = %d ; ";
-	public static final String CARICA_IL_TUO_GOLEM = "%s carica il tuo golem";
+	public static final String CARICA_IL_TUO_GOLEM = "%s carica il tuo golem, devi inserire %d pietre";
 	public static final String PIETRA_NON_DISPONIBILE = "Pietra non disponibile!!";
-	public static final String PIETRA_AGGIUNTA_BENE = "Il tuo golem ha mangiato bene la pietra";
+	public static final String PIETRA_AGGIUNTA_BENE = "Il tuo golem ha mangiato bene la pietra, devi aggiungere ancora %d pietre";
 	public static final String STESSE_PIETRE = "I vostri golem hanno mangiato le stesse pietre!!!";
 	public static final String GOLEM_VOMITA = "...il tuo golem le sta vomitando nella sacca comune...";
 	public static final String ORA_PUOI_AGGIUNGERLE ="\nOra puoi aggiungere nuove pietre!!";
 	public static final String MORTE_GOLEM = "Il Golem di %s e' morto!";
-    
+	public static final String PIETRE_DISPONIBILI = "Pietre attualmente disponibili: ";
+	private static final String VITA_GOLEM = "%s, il tuo golem ha vita = %d";
+	public static final String TASTO_LANCIO_PIETRE = "Per lanciare le pietre permi 0";
+	public static final String TASTO_INIZIO_SCONTRO = "Per iniziare lo scontro premi 0";
+	public static final String MOSTRA_EQUILIBRIO = "La partita Ë finita, ora potete vedere l'equilibrio degli elementi del vostro mondo (cambiera' ad ogni scontro)";
+	public static final String SCELTA_NUMERO_GOLEM = "Inserisci il numero di golem che avra' ogni giocatore per la battaglia (numero golem consigliato per il tuo livello: %d)";
+	public static final String CREAZIONE_EQUILIBRIO = "Il mondo per il tuo scontro Ë stato creato...\nOra tutti gli elementi sono bilanciati";
 
+    
+	public static void pulisciConsole() {
+	    for(int i = 0; i < NUMERO_SPAZI; i++ )
+	    	System.out.println();
+	}
 	public static final String HELLO = " __  __     ______     __         __         ______    \r\n"
 			+ "/\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\ \\       /\\  __ \\   \r\n"
 			+ "\\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\ \\____  \\ \\ \\/\\ \\  \r\n"

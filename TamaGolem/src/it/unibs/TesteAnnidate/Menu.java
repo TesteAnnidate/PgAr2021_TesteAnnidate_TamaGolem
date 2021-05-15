@@ -6,6 +6,7 @@ import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Menu {
 
+	
 	//stampa l'intestazione iniziale
 	public static void benvenuto() {
 		System.out.println(Costanti.HELLO);
@@ -72,7 +73,7 @@ public class Menu {
 	//chiede in unput i nomi dei giocatori
 	public static Giocatore creaGiocatore(int numElementi, int numGolem, int giocatore) {
 		String nome = InputDati.leggiStringa(String.format(Costanti.RICHIESTA_NOME, giocatore));
-		return new Giocatore(nome, numGolem, numElementi);
+		return new Giocatore(nome.toUpperCase(), numGolem, numElementi);
 	}
 
 	// metodo che gestisce tutto
@@ -100,7 +101,8 @@ public class Menu {
 
 	//stampa le regole del gioco
 	private static void regole() {
-		System.out.println("Regole");
+		System.out.println("Tamagolem e' un gioco per due giocatori.\nPer prima cosa dovete decidere la difficolta', successivamente dovete registrarvi e decidere il numero di Golem per giocatore\n"
+				+ "A questo punto iniziera' lo scontro. Ogni giocatore dovra' 'caricare' il proprio golem");
 		
 	}
 
@@ -115,12 +117,12 @@ public class Menu {
 			equilibrio.setMatriceEquilibrio(equilibrio.tabellaProvvisoria());
 		} while (!(equilibrio.isCorrect()));
 		// Avverti il giocatore della creazione del
-		System.out.println("Il mondo per il tuo scontro è stato creato...\nOra tutti gli elementi sono bilanciati");
+		System.out.println(Costanti.CREAZIONE_EQUILIBRIO);
 
 		// Impostazione del numero di golem per giocatore
 		int pietrePerGolem = (int)Math.ceil(((double)(numeroElementi + 1) / 3) + 1);
 		int numGolemPerGiocatore = (int)Math.ceil(((((double)numeroElementi - 1) * ((double)numeroElementi - 2)) / (2 * (double)pietrePerGolem)));
-		numGolemPerGiocatore = InputDati.leggiIntero(String.format("Inserisci il numero di golem che avra' ogni giocatore per la battaglia (numero golem consigliato per il tuo livello: %d)", numGolemPerGiocatore), 1, numeroElementi*5);
+		numGolemPerGiocatore = InputDati.leggiIntero(String.format(Costanti.SCELTA_NUMERO_GOLEM, numGolemPerGiocatore), 1, numeroElementi*5);
 		
 		// creazione gicatori
 		System.out.println(Costanti.REGISTRAZIONE_GIOCATORI);
@@ -134,7 +136,7 @@ public class Menu {
 		// inizio battaglia
 		System.out.println(Costanti.CHE_LA_BATTAGLIA_ABBIA_INIZIO);
 		nuovaBattaglia.scontroCompleto();
-		System.out.println("La partita è finita, ora potete vedere l'equilibrio degli elementi del vostro mondo (cambiera' ad ogni scontro)");
+		System.out.println(Costanti.MOSTRA_EQUILIBRIO);
 		equilibrio.vediTabella();
 
 	}

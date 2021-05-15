@@ -7,6 +7,7 @@ import it.unibs.fp.mylib.InputDati;
 
 public class Battaglia {
 
+	
 	private Giocatore g1;
 	private Giocatore g2;
 	private ArrayList<Pietra> saccaComune;
@@ -28,11 +29,13 @@ public class Battaglia {
 		g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 		caricaGolem(g1);
+		Costanti.pulisciConsole();
 		caricaGolem(g2);
+		Costanti.pulisciConsole();
 		while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
 			seStessePietre(g2);
-
-		while (g1.getNumeroGolem() > 0 && g2.getNumeroGolem() > 0) {
+		while (g1.getNumeroGolem() > 0 && g2.getNumeroGolem() > 0) {		
+			InputDati.leggiIntero(Costanti.TASTO_INIZIO_SCONTRO, 0, 0);
 			scontroSingolo();
 		}
 		if (g1.getNumeroGolem() > 0 && g2.getNumeroGolem() == 0) {
@@ -48,6 +51,7 @@ public class Battaglia {
 		int indicePietreTama1 = 0;
 		int indicePietreTama2 = 0;
 		do {
+			InputDati.leggiIntero(Costanti.TASTO_LANCIO_PIETRE, 0, 0);
 			lanciaPietre(indicePietreTama1, indicePietreTama2);
 			System.out.println(Costanti.GOLEM);
 			
@@ -58,7 +62,8 @@ public class Battaglia {
 					System.out.println(String.format(Costanti.DANNI, g1.getNome(), -danni(indicePietreTama1, indicePietreTama2)));
 				else if(danni(indicePietreTama1, indicePietreTama2) == 0)
 					System.out.println(Costanti.ELEMENTI_UGUALI);
-				InputDati.leggiIntero("Per lanciare le pietre permi 0", 0, 0);
+				System.out.println(String.format(Costanti.VITA_GOLEM, g1.getNome(), g1.getGolem().getVita()));
+				System.out.println(String.format(Costanti.VITA_GOLEM, g2.getNome(), g2.getGolem().getVita()));
 				indicePietreTama1++;
 				indicePietreTama2++;
 
@@ -81,6 +86,7 @@ public class Battaglia {
 			if (g2.getNumeroGolem() > 0){
 				g2.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 				caricaGolem(g2);
+				Costanti.pulisciConsole();
 				while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
 					seStessePietre(g2);
 			}
@@ -94,11 +100,13 @@ public class Battaglia {
 			if (g1.getNumeroGolem() > 0){
 				g1.setGolem(new TamaGolem(equilibrio.getNumeroElementi()));
 				caricaGolem(g1);
+				Costanti.pulisciConsole();
 				while(g1.getGolem().getListaPietre().equals(g2.getGolem().getListaPietre()))
 					seStessePietre(g1);
 			}
 		}
 	}
+
 
 	public void lanciaPietre(int indicePietreTama1, int indicePietreTama2) {
 
@@ -142,7 +150,7 @@ public class Battaglia {
 		for (Pietra pietra : saccaComune) {
 			pietreInSacca[pietra.getElementoRiferimento().ordinal()]++;
 		}
-		System.out.println("Pietre attualmente disponibili: ");
+		System.out.println(Costanti.PIETRE_DISPONIBILI);
 		for(int i = 0; i < equilibrio.getNumeroElementi(); i++){
 			System.out.printf(Costanti.PIETRE_IN_SACCA, elementi[i], pietreInSacca[i]);
 		}
@@ -152,7 +160,7 @@ public class Battaglia {
 	public void caricaGolem(Giocatore giocatore) {
 		int numPietreDaAggiungere = giocatore.getGolem().getPietrePerGolem();
 		Pietra daAggiungere = null;
-		System.out.println(String.format(Costanti.CARICA_IL_TUO_GOLEM, giocatore.getNome()));
+		System.out.println(String.format(Costanti.CARICA_IL_TUO_GOLEM, giocatore.getNome(), giocatore.getGolem().getPietrePerGolem()));
 
 		do {
 			do {
@@ -166,9 +174,8 @@ public class Battaglia {
 
 			giocatore.getGolem().getListaPietre().add(daAggiungere);
 			saccaComune.remove(daAggiungere);
-			System.out.println(Costanti.PIETRA_AGGIUNTA_BENE);
+			System.out.println(String.format(Costanti.PIETRA_AGGIUNTA_BENE, giocatore.getGolem().getPietrePerGolem() - giocatore.getGolem().getListaPietre().size()));
 		} while (giocatore.getGolem().getListaPietre().size() < numPietreDaAggiungere);
-
 	}
 	//nel caso in cui il secondo giocatore abbia scelto le stesse pietre del primo allora si svuota il suo golem e le pietre
 		//che aveva mangiato vengono rimesse nella sacca comune e gli viene chiesto nuovamente di riempire la sacca
@@ -181,6 +188,7 @@ public class Battaglia {
 			giocatore.getGolem().getListaPietre().clear();
 			System.out.println(Costanti.ORA_PUOI_AGGIUNGERLE);
 			caricaGolem(giocatore);
+			Costanti.pulisciConsole();
 		}
 
 	// Getters e setters
