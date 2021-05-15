@@ -7,6 +7,7 @@ public class EquilibrioDelMondo {
 	int numeroElementi;
 	int[][] matriceEquilibrio;
 
+	/*Costruttore dell'equilibrio che va a richiamare il metodo che genera e restituisce una matrice*/
 	public EquilibrioDelMondo(int numeroElementi) {
 		this.numeroElementi = numeroElementi;
 		this.matriceEquilibrio = tabellaFinale(numeroElementi);
@@ -16,7 +17,8 @@ public class EquilibrioDelMondo {
 		// TODO Auto-generated constructor stub
 	}
 
-	//potrebbe essere che l'ultima riga venga sballata
+	/*Ci sono due eccezioni dovute ai controlli che sono stati fatti nella generazione dell'equilibrio, questo metodo si occupa
+	* di verificare se è tutto a posto*/
 	public boolean isCorrect() {
 		for (int i = 0; i < this.numeroElementi; i++) {
 			int sommaRiga = 0;
@@ -30,6 +32,8 @@ public class EquilibrioDelMondo {
 		return true;
 	}
 
+	/*Metodo in cui viene genrata la matrice dell'equilibrio, usa il metoto isCorrect per vedere se va tutto bene e
+	* restituisce la matrice definitiva, viene usato nel costruttore*/
 	public int[][] tabellaFinale(int numeroElementi) {
 		EquilibrioDelMondo equilibrio = new EquilibrioDelMondo();
 		equilibrio.setNumeroElementi(numeroElementi);
@@ -40,6 +44,7 @@ public class EquilibrioDelMondo {
 		return equilibrio.getMatriceEquilibrio();
 	}
 
+	/*Genera un equilibrio "provvisorio", le cui possibili eccezioni vengono verificare da isCorrect*/
 	public int[][] tabellaProvvisoria() {
 		int positivo = 1;
 		int massimaPotenzaGenerabile = numeroElementi/2 + 2;
@@ -147,6 +152,7 @@ public class EquilibrioDelMondo {
 
 	}
 
+	/*permette di visualizzare la matrice dell'equilibrio, con i vari elementi di riferimento ad ogni riga e colonna*/
 	public void vediTabella() {
 		Elementi [] elementi = Elementi.values();
 		//stampo elementi
@@ -176,6 +182,8 @@ public class EquilibrioDelMondo {
 		}
 	}
 
+
+	//GETTERS E SETTERS
 	public int getNumeroElementi() {
 		return numeroElementi;
 	}
