@@ -1,7 +1,5 @@
 package it.unibs.TesteAnnidate;
 
-import java.util.ArrayList;
-
 public class Giocatore {
 	private int numeroGolem; // G
 	private TamaGolem golem; 

@@ -16,7 +16,25 @@ public class Costanti {
     public static final String INIZIA_UNA_NUOVA_PARTITA = "- 1 : inizia una nuova partita";
     public static final String ESCI_DAL_GIOCO = "- 0 : esci dal gioco";
     public static final String REGOLE = "- 2 : Regole ufficiali";
+
+    public static final String SCONTRO_IN_FASE_DI_INIZIO= "Lo scontro sta per avere inizio!!\nInserisci la difficolta' di gioco desiderata";
+	public static final String REGISTRAZIONE_GIOCATORI = "Perfetto!!\nScelta salvata nel database.\nOra registratevi!";
+	public static final String CHE_LA_BATTAGLIA_ABBIA_INIZIO = "Battaglia inizializzata.\nCHE LO SCONTRO ABBIA INIZIO!!!!!";
+
+	//usate in Battaglia
+	public static final String VITTORIA = "Bravo %s, HAI VINTO!!";
+	public static final String DANNI = "Il Golem di %s ha subito %d danni";
+	public static final String ELEMENTI_UGUALI = "Il lancio delle pietre non ha causato danni!";
+	public static final String PIETRE_IN_SACCA = "%s = %d ; ";
+	public static final String CARICA_IL_TUO_GOLEM = "%s carica il tuo golem";
+	public static final String PIETRA_NON_DISPONIBILE = "Pietra non disponibile!!";
+	public static final String PIETRA_AGGIUNTA_BENE = "Il tuo golem ha mangiato bene la pietra";
+	public static final String STESSE_PIETRE = "I vostri golem hanno mangiato le stesse pietre!!!";
+	public static final String GOLEM_VOMITA = "...il tuo golem le sta vomitando nella sacca comune...";
+	public static final String ORA_PUOI_AGGIUNGERLE ="\nOra puoi aggiungere nuove pietre!!";
+	public static final String MORTE_GOLEM = "Il Golem di %s e' morto!";
     
+
 	public static final String HELLO = " __  __     ______     __         __         ______    \r\n"
 			+ "/\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\ \\       /\\  __ \\   \r\n"
 			+ "\\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\ \\____  \\ \\ \\/\\ \\  \r\n"
@@ -42,4 +60,25 @@ public class Costanti {
 			+ "| |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | | |              | |\r\n"
 			+ "| '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |\r\n"
 			+ " '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' '----------------' ";
+
+	public static String GOLEM = "                                                                                                			\r\n"
+			+ "			                                                                                                     \r\n"
+			+ "                 &#######                           			                        .#######&                \r\n"
+			+ "            @@@%&%%%@%###%@                       			                       @%###%@%%&&%@@@           \r\n"
+			+ "          %@@@&&&%%%#&%%%@@                       			                       @@&&%%#&%&&&&@@@          \r\n"
+			+ "        @@%%@@&&%%%&######%%@                     			                     @%%##%###&%%%&&@@%&@@       \r\n"
+			+ "       @@%&&##&%&&&%%%%%%%%%####                  			                  ####%%%%%%%%&&&&%&##&%%@@      \r\n"
+			+ "     @%%######&&%%&%##%%##%%%####                 			                 ####%&%##%%##%&%%&@######%%@    \r\n"
+			+ "     @@%(###@&%%%%&%&%%##%%#%%(#&&%               			               %&@##%&#%%##%%&%&%%%%&@###%%@@    \r\n"
+			+ "    @%%## @@%%%%&%##########  @&&&#####%##%%##%   	  		   &##&&##&(###(%&@@  #########%%%&%%%@& ##&&@   \r\n"
+			+ "    @%&##  @@@@%%&(&#########    %@@@@&###%%@     			     @%%###%@@@@&    ###(#####%(%#&@@@@  ##%%@   \r\n"
+			+ "    @%%%%%  @@@%&##%######%%##        @@%&%@ @@&  			 &@@@ @&%%@@        ##%&#######(#%%@@@  %%%%&@   \r\n"
+			+ "   @%#####(  @@@%##&&& @@@%%##            @@#@    			    @#@@            ##%&@@@.@@%##&@@&  ######%@  \r\n"
+			+ "   @@%%%%%%##@@@@@       &@@@@                    			                   #@@@@@       @@@@&##&%%%%%@@  \r\n"
+			+ "    &#@&%# @#%%%##%      @%%###                   			                   ##(&&@      ##(%%&#@ #%&@#%   \r\n"
+			+ "    @%  (%# @@%%%%&     #@@@%&#                   			                  .#%%@@@      %%%%%@@ #&   #@   \r\n"
+			+ "            @&####        @@@%###                 			                 ###%@@(        ####@@           \r\n"
+			+ "            @@@%&%%       &@@@@@%%%@              			              @%%&@@@@@.       %%%%@&&           \r\n"
+			+ "			                                                                                                     \r\n"
+			+ "                                                                                                              \r\n";
 }

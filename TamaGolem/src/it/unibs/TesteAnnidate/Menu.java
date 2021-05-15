@@ -6,25 +6,8 @@ import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Menu {
 
-	
-
-
-	// creazione equilibrio: generazione del numero casuale che va a determinare la
-	// tabella da usare
-
-	// mettere le pietre nel golem
-
-	// private static final string INSERISCI_NUM_ELEMENTI = "\ninserisci num
-	// elementi da usare:";
-
-	// private static int numPietre; //√® il valore P della consegna
-
+	//stampa l'intestazione iniziale
 	public static void benvenuto() {
-		/*
-		 * System.out.println(Costanti.TRATTINI);
-		 * System.out.println(Costanti.BENVENUTO);
-		 * System.out.println(Costanti.TRATTINI);
-		 */
 		System.out.println(Costanti.HELLO);
 		System.out.println(Costanti.TAMAGOLEM);
 	}
@@ -37,7 +20,7 @@ public class Menu {
 		return InputDati.leggiIntero(Costanti.COSA_VUOI_FARE, 0, 2);
 	}
 
-	// decidere la difficolta'†
+	// decidere la difficolta'
 	public static int SceltaDifficolta() {
 		MyMenu ilMenu = new MyMenu(Costanti.SCELTA_DIFFICOLTA, Costanti.SCEGLI_DIFFICOLTA);
 		int scelta = ilMenu.scegli();
@@ -46,7 +29,7 @@ public class Menu {
 		do {
 			switch (scelta) {
 			case 1:
-				numElementi = NumeriCasuali.estraiIntero(4, 5); // messo 4 perch√® le formule non andavano troppo con 3
+				numElementi = NumeriCasuali.estraiIntero(3, 5);
 				break;
 			case 2:
 				numElementi = NumeriCasuali.estraiIntero(6, 8);
@@ -63,6 +46,7 @@ public class Menu {
 		return numElementi;
 	}
 
+	//gestisce la fase di richiesta delle pietre da far mangiare al golem (viene richiamato in caricaGolem di battaglia)
 	public static Elementi chiediPietra(int numElementi, String nomeGiocatore) {
 		Elementi[] arrayElementi = Elementi.values();
 		System.out.print("\n");
@@ -85,6 +69,7 @@ public class Menu {
 		return pietraScelta;
 	}
 
+	//chiede in unput i nomi dei giocatori
 	public static Giocatore creaGiocatore(int numElementi, int numGolem, int giocatore) {
 		String nome = InputDati.leggiStringa(String.format(Costanti.RICHIESTA_NOME, giocatore));
 		return new Giocatore(nome, numGolem, numElementi);
@@ -113,14 +98,15 @@ public class Menu {
 
 	}
 
+	//stampa le regole del gioco
 	private static void regole() {
 		System.out.println("Regole");
 		
 	}
 
-	// metodo per creare l'equilibrio da mettere sopra
+	// metodo per creare l'equilibrio, creare giocatori, inizializzare una battaglia
 	public static void iniziaScontro() {
-		System.out.println("Lo scontro sta per avere inizio!!\nIserisci la difficolta' di gioco desiderata");
+		System.out.println(Costanti.SCONTRO_IN_FASE_DI_INIZIO);
 		int numeroElementi = SceltaDifficolta();
 		EquilibrioDelMondo equilibrio = new EquilibrioDelMondo(numeroElementi);
 		
@@ -130,21 +116,23 @@ public class Menu {
 		} while (!(equilibrio.isCorrect()));
 		// Avverti il giocatore della creazione del
 		System.out.println("Il mondo per il tuo scontro Ë stato creato...\nOra tutti gli elementi sono bilanciati");
+
 		// Impostazione del numero di golem per giocatore
-		int pietrePerGolem = (int)(((double)numeroElementi + 1) / 3) + 1;
-		int numGolemPerGiocatore = (int)((((double)numeroElementi - 1) * ((double)numeroElementi - 2)) / (2 * (double)pietrePerGolem));
+		int pietrePerGolem = (int)Math.ceil(((double)(numeroElementi + 1) / 3) + 1);
+		int numGolemPerGiocatore = (int)Math.ceil(((((double)numeroElementi - 1) * ((double)numeroElementi - 2)) / (2 * (double)pietrePerGolem)));
 		numGolemPerGiocatore = InputDati.leggiIntero(String.format("Inserisci il numero di golem che avra' ogni giocatore per la battaglia (numero golem consigliato per il tuo livello: %d)", numGolemPerGiocatore), 1, numeroElementi*5);
 		
 		// creazione gicatori
-		System.out.println("Perfetto!!\nScelta salvata nel database.\nOra registratevi!");
+		System.out.println(Costanti.REGISTRAZIONE_GIOCATORI);
 		int contatoreGiocatore = 1;
 		Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore, contatoreGiocatore);
 		contatoreGiocatore++;
 		Giocatore giocatore2 = creaGiocatore(numeroElementi, numGolemPerGiocatore, contatoreGiocatore);
 
 		Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, equilibrio);
-		// inizio battaglia		
-		System.out.println("Battaglia inizializzata.\nCHE LO SCONTRO ABBIA INIZIO!!!!!");
+
+		// inizio battaglia
+		System.out.println(Costanti.CHE_LA_BATTAGLIA_ABBIA_INIZIO);
 		nuovaBattaglia.scontroCompleto();
 		System.out.println("La partita Ë finita, ora potete vedere l'equilibrio degli elementi del vostro mondo (cambiera' ad ogni scontro)");
 		equilibrio.vediTabella();
