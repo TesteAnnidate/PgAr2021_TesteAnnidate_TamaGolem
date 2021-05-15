@@ -1,7 +1,6 @@
 package it.unibs.TesteAnnidate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import it.unibs.fp.mylib.InputDati;
 

@@ -91,7 +91,7 @@ public class Menu {
 				iniziaScontro();
 				break;
 			case 2:
-				regole();
+				System.out.println(Costanti.REGOLE_INIZIALI);
 				break;
 			}
 
@@ -99,12 +99,7 @@ public class Menu {
 
 	}
 
-	//stampa le regole del gioco
-	private static void regole() {
-		System.out.println("Tamagolem e' un gioco per due giocatori.\nPer prima cosa dovete decidere la difficolta', successivamente dovete registrarvi e decidere il numero di Golem per giocatore\n"
-				+ "A questo punto iniziera' lo scontro. Ogni giocatore dovra' 'caricare' il proprio golem");
-		
-	}
+	
 
 	// metodo per creare l'equilibrio, creare giocatori, inizializzare una battaglia
 	public static void iniziaScontro() {
