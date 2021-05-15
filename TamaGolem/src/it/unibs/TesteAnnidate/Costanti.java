@@ -35,7 +35,7 @@ public class Costanti {
 	public static final String ORA_PUOI_AGGIUNGERLE ="\nOra puoi aggiungere nuove pietre!!";
 	public static final String MORTE_GOLEM = "Il Golem di %s e' morto!";
 	public static final String PIETRE_DISPONIBILI = "Pietre attualmente disponibili: ";
-	private static final String VITA_GOLEM = "%s, il tuo golem ha vita = %d";
+	public static final String VITA_GOLEM = "%s, il tuo golem ha vita = %d";
 	public static final String TASTO_LANCIO_PIETRE = "Per lanciare le pietre permi 0";
 	public static final String TASTO_INIZIO_SCONTRO = "Per iniziare lo scontro premi 0";
 	public static final String MOSTRA_EQUILIBRIO = "La partita è finita, ora potete vedere l'equilibrio degli elementi del vostro mondo (cambiera' ad ogni scontro)";
