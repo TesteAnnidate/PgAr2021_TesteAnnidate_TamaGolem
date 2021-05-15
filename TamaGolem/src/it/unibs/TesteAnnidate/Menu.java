@@ -12,7 +12,7 @@ public class Menu {
 		System.out.println(Costanti.HELLO);
 		System.out.println(Costanti.TAMAGOLEM);
 	}
-
+	// chiede all'utente cosa vuole fare
 	public static int richiestaComando() {
 		System.out.println(Costanti.ESCI_DAL_GIOCO);
 		System.out.println(Costanti.INIZIA_UNA_NUOVA_PARTITA);
@@ -21,7 +21,7 @@ public class Menu {
 		return InputDati.leggiIntero(Costanti.COSA_VUOI_FARE, 0, 2);
 	}
 
-	// decidere la difficolta'
+	// viene decisa la difficolta' della partita, in base alla difficoltà varia il numero di elementi disponibili nella partita che verranno generati a casualmente tra un max e un min
 	public static int SceltaDifficolta() {
 		MyMenu ilMenu = new MyMenu(Costanti.SCELTA_DIFFICOLTA, Costanti.SCEGLI_DIFFICOLTA);
 		int scelta = ilMenu.scegli();
@@ -30,13 +30,13 @@ public class Menu {
 		do {
 			switch (scelta) {
 			case 1:
-				numElementi = NumeriCasuali.estraiIntero(3, 5);
+				numElementi = NumeriCasuali.estraiIntero(3, 5); //facile
 				break;
 			case 2:
-				numElementi = NumeriCasuali.estraiIntero(6, 8);
+				numElementi = NumeriCasuali.estraiIntero(6, 8); //intermedio
 				break;
 			case 3:
-				numElementi = NumeriCasuali.estraiIntero(9, 10);
+				numElementi = NumeriCasuali.estraiIntero(9, 10); //super-impossibile
 				break;
 			default:
 				System.out.println(Costanti.SCELTA_SBAGLIATA);
@@ -70,13 +70,13 @@ public class Menu {
 		return pietraScelta;
 	}
 
-	//chiede in unput i nomi dei giocatori
+	//chiede in input i nomi dei giocatori
 	public static Giocatore creaGiocatore(int numElementi, int numGolem, int giocatore) {
 		String nome = InputDati.leggiStringa(String.format(Costanti.RICHIESTA_NOME, giocatore));
 		return new Giocatore(nome.toUpperCase(), numGolem, numElementi);
 	}
 
-	// metodo che gestisce tutto
+	// metodo che viene evocato nel main per far partire il tutto
 	public static void inizioTama() {
 		benvenuto();
 		int comando = 0;
@@ -119,7 +119,7 @@ public class Menu {
 		int numGolemPerGiocatore = (int)Math.ceil(((((double)numeroElementi - 1) * ((double)numeroElementi - 2)) / (2 * (double)pietrePerGolem)));
 		numGolemPerGiocatore = InputDati.leggiIntero(String.format(Costanti.SCELTA_NUMERO_GOLEM, numGolemPerGiocatore), 1, numeroElementi*5);
 		
-		// creazione gicatori
+		// creazione gicatori e richiama il costruttore del giocatore
 		System.out.println(Costanti.REGISTRAZIONE_GIOCATORI);
 		int contatoreGiocatore = 1;
 		Giocatore giocatore1 = creaGiocatore(numeroElementi, numGolemPerGiocatore, contatoreGiocatore);
@@ -128,7 +128,7 @@ public class Menu {
 
 		Battaglia nuovaBattaglia = new Battaglia(giocatore1, giocatore2, equilibrio);
 
-		// inizio battaglia
+		// inizio battaglia  al termine verrà mostato l'equilibrio della partita
 		System.out.println(Costanti.CHE_LA_BATTAGLIA_ABBIA_INIZIO);
 		nuovaBattaglia.scontroCompleto();
 		System.out.println(Costanti.MOSTRA_EQUILIBRIO);
